@@ -49,7 +49,8 @@ public:
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "Manager")
 	APerformerManager* PerformerManager;
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
+	UStageDataAsset* testDataSet;
 	//TODO : 스테이지 데이터 받는 로직 만들어야 함.
 
 

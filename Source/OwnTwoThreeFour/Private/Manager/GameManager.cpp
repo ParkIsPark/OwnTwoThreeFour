@@ -27,6 +27,10 @@ void AGameManager::BeginPlay()
 void AGameManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (testDataSet != nullptr) {
+		SetStageData(testDataSet);
+		testDataSet = nullptr;
+	}
 
 }
 
