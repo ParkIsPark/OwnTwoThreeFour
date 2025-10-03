@@ -1,9 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Manager/GameManager.h"
 #include "Map/MapManager.h"
+#include "Pawn/PerformerManager.h"
 #include "Data/StageDataAsset.h"
+
 
 // Sets default values
 AGameManager::AGameManager()
@@ -30,24 +32,34 @@ void AGameManager::Tick(float DeltaTime)
 
 void AGameManager::SetStageData(const UStageDataAsset* StageDataAsset)
 {
-	// À¯È¿¼º °ËÁõ 
+	// ìœ íš¨ì„± ê²€ì¦ 
 	if (StageDataAsset == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("½ºÅ×ÀÌÁö µ¥ÀÌÅÍ°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù"));
+		UE_LOG(LogTemp, Error, TEXT("[%s] ìŠ¤í…Œì´ì§€ ë°ì´í„°ê°€ ì •ìƒì ì´ì§€ ì•ŠìŠµë‹ˆë‹¤"), *GetName());
 		return;
 	}
 
 	//=======================================
-	// ·ÎÁ÷ 1. ¸Å´ÏÀú µ¥ÀÌÅÍ ÃÊ±âÈ­
+	// ë¡œì§ 1. ë§¤ë‹ˆì € ë°ì´í„° ì´ˆê¸°í™”
 	//==========================================
-	MapManager->SetMapData(StageDataAsset);	
+	MapManager->SetMapSize(StageDataAsset->GetGridSize());	
+	MapManager->SetTileSpawnData(StageDataAsset->GetTileSpawnData());
 
+	PerformerManager->SetPerformerData(StageDataAsset->GetPerformerSpawnData());
+
+	//=======================================
+	// ë¡œì§ 2. ë³¸ì¸ ë°ì´í„° ì´ˆê¸°í™”
+	//==========================================
+	TimeLineTrack = StageDataAsset->GetTimelineTrack();
+
+	// ëª¨ë“ ê²Œ ëë‚¬ìœ¼ë©´ -> ê²Œìž„ ìŠ¤íƒ€íŠ¸
+	StartGame();
 }
 
 void AGameManager::StartGame()
 {
-	PlayerState = EPlayerState::EPS_Puzzle; // ÇÃ·¹ÀÌ¾î°¡ ÆÛÁñÀ» Çª´Â »óÅÂÀÓÀ» È®ÀÎÇÕ´Ï´Ù. 
+	PlayerState = EPlayerState::EPS_Puzzle; // í”Œë ˆì´ì–´ê°€ í¼ì¦ì„ í‘¸ëŠ” ìƒíƒœìž„ì„ í™•ì¸í•©ë‹ˆë‹¤. 
 
-	//TODO : ¸Ê ¸Å´ÏÀú -> °ÔÀÓ ½ÃÀÛ
-
+	//TODO : ë§µ ë§¤ë‹ˆì € -> ê²Œìž„ ì‹œìž‘
+	MapManager->SpawnMap();
 }
 

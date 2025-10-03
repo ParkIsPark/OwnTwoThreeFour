@@ -14,7 +14,7 @@ UCLASS()
 class OWNTWOTHREEFOUR_API UStageDataAsset : public UDataAsset
 {
 	GENERATED_BODY()
-public:
+private:
     /** 이 스테이지 그리드의 가로 크기입니다. */
     UPROPERTY(EditAnywhere,Category = "Map", meta = (AllowPrivateAccess = "true"))
     int32 GridWidth;
@@ -36,5 +36,25 @@ public:
     /** 이 스테이지의 타임라인 트랙입니다. */
     UPROPERTY(EditAnywhere, Category = "Timeline", meta = (AllowPrivateAccess = "true"))
     TArray<int32> TimelineTrack;
-	
+
+public:
+    //======================================================================
+    // ACCESSORS / GETTERS
+    //======================================================================
+
+    /** 그리드의 가로, 세로 크기를 FIntPoint로 반환합니다. */
+    UFUNCTION(BlueprintPure, Category = "StageData")
+    FIntPoint GetGridSize() const { return FIntPoint(GridWidth, GridHeight); }
+
+    /** 그리드 타일 레이아웃 데이터를 const 참조로 반환합니다. (복사 방지) */
+    UFUNCTION(BlueprintPure, Category = "StageData")
+    const TArray<FTileSpawnData> GetTileSpawnData() const { return TileSpawnData; }
+
+    /** 스폰할 Performer들의 데이터 목록을 const 참조로 반환합니다. */
+    UFUNCTION(BlueprintPure, Category = "StageData")
+    const TArray<FPerformerSpawnData>& GetPerformerSpawnData() const { return PerformerSpawnData; }
+
+    /** 타임라인 트랙 데이터를 const 참조로 반환합니다. */
+    UFUNCTION(BlueprintPure, Category = "StageData")
+    const TArray<int32>& GetTimelineTrack() const { return TimelineTrack; }
 };

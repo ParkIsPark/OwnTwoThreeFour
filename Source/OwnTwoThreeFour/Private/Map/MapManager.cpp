@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Map/MapManager.h"
@@ -28,23 +28,20 @@ void AMapManager::Tick(float DeltaTime)
 
 }
 
-void AMapManager::SetMapData(const UStageDataAsset* StageData)
+
+void AMapManager::SetMapSize(const FIntPoint& Size)
 {
-	// À¯È¿¼º °ËÁõ 
-	if (StageData == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("½ºÅ×ÀÌÁö µ¥ÀÌÅÍ°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù"));
-		return;
-	}
+	GridWidth = Size.X;
+	GridHeight = Size.Y;
+}
 
-	//=======================================
-	// ·ÎÁ÷ 1 : µ¥ÀÌÅÍ ¹èÄ¡
-	//==========================================
-	TileSpawnData = StageData->TileSpawnData;
-	PerformerSpawnData = StageData->PerformerSpawnData;
+void AMapManager::SetTileSpawnData(const TArray<FTileSpawnData>& InTileSpawnData)
+{
+	TileSpawnData = InTileSpawnData;
+}
 
-	GridHeight = StageData->GridHeight;
-	GridWidth = StageData->GridWidth;
-
-
+/** ë§µì„ ìŠ¤í°í•©ë‹ˆë‹¤*/
+void AMapManager::SpawnMap()
+{
 }
 

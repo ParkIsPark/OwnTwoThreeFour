@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -8,10 +8,11 @@
 #include "GameManager.generated.h"
 
 class AMapManager;
+class APerformerManager;
 class UStageDataAsset;
 
 /**
-* °ÔÀÓÀÇ Àü¹İÀûÀÎ »óÈ²À» ÃÑ°ıÇÕ´Ï´Ù.
+* ê²Œì„ì˜ ì „ë°˜ì ì¸ ìƒí™©ì„ ì´ê´„í•©ë‹ˆë‹¤.
 */
 UCLASS()
 class OWNTWOTHREEFOUR_API AGameManager : public AActor
@@ -27,7 +28,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	
-	/** °ÔÀÓÀ» ½ÃÀÛÇÕ´Ï´Ù*/
+	/** ê²Œì„ì„ ì‹œì‘í•©ë‹ˆë‹¤*/
 	void StartGame();
 
 
@@ -35,19 +36,26 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY()
-	EPlayerState PlayerState; // ÇÃ·¹ÀÌ¾îÀÇ »óÅÂÀÔ´Ï´Ù.
+	//TODO : ì´ê±° í”Œë ˆì´ì–´ì»¨íŠ¸ë¡¤ìª½ìœ¼ë¡œ ë„˜ê²¨ì¤˜ì•¼ í•¨.
+	UPROPERTY(VisibleAnywhere, Category = "GameState")
+	EPlayerState PlayerState; // í”Œë ˆì´ì–´ì˜ ìƒíƒœì…ë‹ˆë‹¤. 
 
-	//¸Ê ¸Å´ÏÀú
+	UPROPERTY(VisibleAnywhere, Category="GameState")
+	TArray<int32> TimeLineTrack;
+
+	//ë§µ ë§¤ë‹ˆì €
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
 	AMapManager* MapManager;
 
-	//TODO : ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ ¹Ş´Â ·ÎÁ÷ ¸¸µé¾î¾ß ÇÔ.
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "Manager")
+	APerformerManager* PerformerManager;
+
+	//TODO : ìŠ¤í…Œì´ì§€ ë°ì´í„° ë°›ëŠ” ë¡œì§ ë§Œë“¤ì–´ì•¼ í•¨.
 
 
 	UFUNCTION()
 	/**
-	* ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ¸¦ ¹Ş¾Æ¼­ ½ÃÀÛÇÒ ÁØºñ¸¦ ÇÕ´Ï´Ù.
+	* ìŠ¤í…Œì´ì§€ ë°ì´í„°ë¥¼ ë°›ì•„ì„œ ì‹œì‘í•  ì¤€ë¹„ë¥¼ í•©ë‹ˆë‹¤.
 	*/
 	void SetStageData(const UStageDataAsset* StageDataAsset);
 

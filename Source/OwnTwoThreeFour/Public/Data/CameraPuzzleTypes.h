@@ -3,14 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CameraPuzzleTypes.generated.h" 
-
-
+#include "CameraPuzzleTypes.generated.h"
 /**
 * 게임의 상태 관련된 열거형입니다. 
 * 초기엔 카메라 퍼즐이어서 카메라퍼즐타입이라는 단어를 썼습니다.
 */
-
 // 플레이어의 상태를 정의하는 열거형입니다. 
 UENUM(BlueprintType)
 enum class EPlayerState : uint8

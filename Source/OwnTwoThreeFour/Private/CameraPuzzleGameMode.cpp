@@ -4,6 +4,8 @@
 #include "CameraPuzzleGameMode.h"
 #include "Map/MapManager.h"
 #include "Manager/GameManager.h"
+#include "Pawn/PerformerManager.h"
+
 void ACameraPuzzleGameMode::BeginPlay()
 {
 	Super::BeginPlay();
@@ -18,16 +20,20 @@ void ACameraPuzzleGameMode::BeginPlay()
 	// 2. GameManager를 스폰
 	AGameManager* SpawnedGameManager = GetWorld()->SpawnActor<AGameManager>();
 	
+	// 3. PerforemrManager 스폰
+	APerformerManager* SpawnedPerformerManager = GetWorld()->SpawnActor<APerformerManager>();
+
 	//유효성 검사
 	if (SpawnedMapManager && SpawnedGameManager) {
 
 		// 1. 아웃라이어 창에서 활용할 레이블 할당
 		SpawnedMapManager->SetActorLabel(TEXT("MapManager"));
 		SpawnedGameManager->SetActorLabel(TEXT("GameManager"));
+		SpawnedPerformerManager->SetActorLabel(TEXT("PerformerManager"));
 
 		//2. 게임 매니저에 맵 매니저 할당.
 		SpawnedGameManager->MapManager = SpawnedMapManager;
-
+		SpawnedGameManager->PerformerManager = SpawnedPerformerManager;
 	}
 	else
 	{

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Data/CameraPuzzleTypes.h"
 #include "MapManager.generated.h"
 
 class UStageDataAsset;
@@ -35,17 +36,21 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Grid")
 	TArray<FTileSpawnData> TileSpawnData;
 
-	/** 이 스테이지에 스폰될 Performer들의 정보 목록입니다. */
-	UPROPERTY(EditAnywhere, Category = "Performer")
-	TArray<FPerformerSpawnData> PerformerSpawnData;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	
+	/** 맵의 사이즈를 설정합니다*/
 	UFUNCTION()
-	void SetMapData(const UStageDataAsset* StageData);
+	void SetMapSize(const FIntPoint& Size);
+	/**맵의 타일 스폰 데이터를 설정합니다*/
+	UFUNCTION()
+	void SetTileSpawnData(const TArray<FTileSpawnData>& InTileSpawnData);
 
+	UFUNCTION()
+	void SpawnMap();
 
 	//TODO : 그리드 출력 만들어야 함. 
 	//TODO : 데이터 기반으로 바닥 출력하는거 만들어야 함.
