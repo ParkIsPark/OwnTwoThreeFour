@@ -16,6 +16,8 @@ class OWNTWOTHREEFOUR_API ACameraPuzzleGameMode : public AGameModeBase
 
 public:
 
+protected:
+	virtual void BeginPlay() override;
 private:
 	
 };

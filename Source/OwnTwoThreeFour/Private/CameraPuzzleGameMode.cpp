@@ -1,5 +1,37 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "CameraPuzzleGameMode.h"
+#include "Map/MapManager.h"
+#include "Manager/GameManager.h"
+void ACameraPuzzleGameMode::BeginPlay()
+{
+	Super::BeginPlay();
 
+	//=======================================
+	// 매니저 스폰
+	//==========================================
+
+	// 1. MapManager를 스폰
+	AMapManager* SpawnedMapManager = GetWorld()->SpawnActor<AMapManager>();
+
+	// 2. GameManager를 스폰
+	AGameManager* SpawnedGameManager = GetWorld()->SpawnActor<AGameManager>();
+	
+	//유효성 검사
+	if (SpawnedMapManager && SpawnedGameManager) {
+
+		// 1. 아웃라이어 창에서 활용할 레이블 할당
+		SpawnedMapManager->SetActorLabel(TEXT("MapManager"));
+		SpawnedGameManager->SetActorLabel(TEXT("GameManager"));
+
+		//2. 게임 매니저에 맵 매니저 할당.
+		SpawnedGameManager->MapManager = SpawnedMapManager;
+
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("핵심 매니저 스폰에 실패했습니다!"));
+	}
+	
+}

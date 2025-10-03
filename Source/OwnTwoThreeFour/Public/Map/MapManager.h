@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "MapManager.generated.h"
 
+class UStageDataAsset;
+
 UCLASS()
 class OWNTWOTHREEFOUR_API AMapManager : public AActor
 {
@@ -19,10 +21,33 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	/** 이 스테이지 그리드의 가로 크기입니다. */
+	UPROPERTY(EditAnywhere, Category = "Propperty")
+	int32 GridWidth;
+
+	/** 이 스테이지 그리드의 세로 크기입니다. */
+	UPROPERTY(EditAnywhere, Category = "Property")
+	int32 GridHeight;
+
+	/** * 그리드 레이아웃 데이터입니다. (GridWidth * GridHeight)개의 원소를 가져야 합니다.
+	* 배열의 첫 번째 원소는 (0,0), 마지막 원소는 (Width-1, Height-1)에 해당합니다.
+	*/
+	UPROPERTY(EditAnywhere, Category = "Grid")
+	TArray<FTileSpawnData> TileSpawnData;
+
+	/** 이 스테이지에 스폰될 Performer들의 정보 목록입니다. */
+	UPROPERTY(EditAnywhere, Category = "Performer")
+	TArray<FPerformerSpawnData> PerformerSpawnData;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void SetMapData(const UStageDataAsset* StageData);
 
+
+	//TODO : 그리드 출력 만들어야 함. 
+	//TODO : 데이터 기반으로 바닥 출력하는거 만들어야 함.
 
 };

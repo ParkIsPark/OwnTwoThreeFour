@@ -7,7 +7,7 @@
 #include "MapSetting.generated.h"
 
 /**
- * 
+ * 게임의 기본적인 세팅이 기록되어있는 클래스
  */
 UCLASS(Config = Game, DefaultConfig)
 class UMapSettings : public UDeveloperSettings

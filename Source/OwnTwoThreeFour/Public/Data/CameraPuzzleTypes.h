@@ -3,7 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CameraPuzzleTypes.generated.h" // UHT(Unreal Header Tool)를 위한 헤더
+#include "CameraPuzzleTypes.generated.h" 
+
+
+/**
+* 게임의 상태 관련된 열거형입니다. 
+* 초기엔 카메라 퍼즐이어서 카메라퍼즐타입이라는 단어를 썼습니다.
+*/
+
+// 플레이어의 상태를 정의하는 열거형입니다. 
+UENUM(BlueprintType)
+enum class EPlayerState : uint8
+{
+    EPS_Default   UMETA(DisplayName = "Default"), // 기본 단계
+    EPS_Puzzle   UMETA(DisplayName = "Puzzle") // 퍼즐에 돌입한 단계
+};
 
 // 게임의 전체적인 상태를 정의하는 열거형(Enum)입니다.
 UENUM(BlueprintType)
