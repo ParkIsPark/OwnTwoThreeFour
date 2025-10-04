@@ -68,10 +68,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	/** 모든 매니저가 준비되었다면 바뀝니다 */
+	UFUNCTION(BlueprintCallable, Category = "Util")
+	FORCEINLINE void CheckAllManagerIsReady() { bAllManagerReady = true; }
 
-	/**
-	* 스테이지 데이터를 받아서 시작할 준비를 합니다.
-	*/
+
+	/**스테이지 데이터를 받아서 시작할 준비를 합니다.*/
 	UFUNCTION()
 	void SetStageData();
 
@@ -80,6 +82,7 @@ protected:
 	UFUNCTION()
 	void StartGame();
 
+	
 private:
 	/** 타임라인 트랙 정보*/
 	UPROPERTY(VisibleAnywhere, Category = "GameState", meta = (AllowPrivateAccess = "true"))
@@ -97,7 +100,8 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UStageDataAsset> currentStageDataAsset;
 
-
+	/** 모든 매니저가 로딩되었는가? */
+	int32 bAllManagerReady : 1;
 
 
 
