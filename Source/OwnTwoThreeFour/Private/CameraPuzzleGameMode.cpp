@@ -15,13 +15,13 @@ void ACameraPuzzleGameMode::BeginPlay()
 	//==========================================
 
 	// 1. MapManager를 스폰
-	AMapManager* SpawnedMapManager = GetWorld()->SpawnActor<AMapManager>();
+	SpawnedMapManager = GetWorld()->SpawnActor<AMapManager>();
 
 	// 2. GameManager를 스폰
-	AGameManager* SpawnedGameManager = GetWorld()->SpawnActor<AGameManager>();
+	SpawnedGameManager = GetWorld()->SpawnActor<AGameManager>();
 	
 	// 3. PerforemrManager 스폰
-	APerformerManager* SpawnedPerformerManager = GetWorld()->SpawnActor<APerformerManager>();
+	SpawnedPerformerManager = GetWorld()->SpawnActor<APerformerManager>();
 
 	//유효성 검사
 	if (SpawnedMapManager && SpawnedGameManager) {
@@ -32,8 +32,8 @@ void ACameraPuzzleGameMode::BeginPlay()
 		SpawnedPerformerManager->SetActorLabel(TEXT("PerformerManager"));
 
 		//2. 게임 매니저에 맵 매니저 할당.
-		SpawnedGameManager->MapManager = SpawnedMapManager;
-		SpawnedGameManager->PerformerManager = SpawnedPerformerManager;
+		SpawnedGameManager->SetMapManager(SpawnedMapManager);
+		SpawnedGameManager->SetPerformerManager(SpawnedPerformerManager);
 	}
 	else
 	{
@@ -41,3 +41,4 @@ void ACameraPuzzleGameMode::BeginPlay()
 	}
 	
 }
+

@@ -28,7 +28,6 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Tile")
     ETileType TileType;
 
-    //TODO : 타일 스폰 규칙 정의해야 함.
 
 public:
     // 이 타일이 장애물을 가지고 있는지 (ObstacleMesh에 유효한 매쉬가 할당되었는지)를 확인하는 함수입니다.

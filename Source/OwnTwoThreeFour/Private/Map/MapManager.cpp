@@ -12,6 +12,7 @@ AMapManager::AMapManager()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	//TODO : 이거 하드코딩 지우고 바닥 까는거 생각하는거 필요. 
 	SpawnPoint = FVector(0.0f, 0.0f, 0.0f);// 몰라시발일단하드코딩으로때워
 
 }

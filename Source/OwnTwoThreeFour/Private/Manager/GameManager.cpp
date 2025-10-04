@@ -27,33 +27,38 @@ void AGameManager::BeginPlay()
 void AGameManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (testDataSet != nullptr) {
-		SetStageData(testDataSet);
-		testDataSet = nullptr;
-	}
 
 }
 
-void AGameManager::SetStageData(const UStageDataAsset* StageDataAsset)
+void AGameManager::LoadStageData(UStageDataAsset* StageDataAsset)
 {
 	// 유효성 검증 
 	if (StageDataAsset == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("[%s] 스테이지 데이터가 정상적이지 않습니다"), *GetName());
 		return;
 	}
+	//스테이지 데이터 세팅으로 넘어갑니다.
+	currentStageDataAsset = StageDataAsset;
+
+	SetStageData(); 
+}
+
+void AGameManager::SetStageData()
+{
+	
 
 	//=======================================
 	// 로직 1. 매니저 데이터 초기화
 	//==========================================
-	MapManager->SetMapSize(StageDataAsset->GetGridSize());	
-	MapManager->SetTileSpawnData(StageDataAsset->GetTileSpawnData());
+	MapManager->SetMapSize(currentStageDataAsset->GetGridSize());
+	MapManager->SetTileSpawnData(currentStageDataAsset->GetTileSpawnData());
 
-	PerformerManager->SetPerformerData(StageDataAsset->GetPerformerSpawnData());
+	PerformerManager->SetPerformerData(currentStageDataAsset->GetPerformerSpawnData());
 
 	//=======================================
 	// 로직 2. 본인 데이터 초기화
 	//==========================================
-	TimeLineTrack = StageDataAsset->GetTimelineTrack();
+	TimeLineTrack = currentStageDataAsset->GetTimelineTrack();
 
 	// 모든게 끝났으면 -> 게임 스타트
 	StartGame();

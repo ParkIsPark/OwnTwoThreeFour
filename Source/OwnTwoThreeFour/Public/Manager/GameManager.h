@@ -18,21 +18,14 @@ UCLASS()
 class OWNTWOTHREEFOUR_API AGameManager : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+public:
+	/** 스테이지 데이터를 로드해옵니다.*/
+	UFUNCTION()
+	void LoadStageData(UStageDataAsset* StageDataAsset);
+
+
 	// Sets default values for this actor's properties
 	AGameManager();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-	
-	/** 게임을 시작합니다*/
-	void StartGame();
-
-
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -40,24 +33,72 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "GameState")
 	EPlayerState PlayerState; // 플레이어의 상태입니다. 
 
-	UPROPERTY(VisibleAnywhere, Category="GameState")
-	TArray<int32> TimeLineTrack;
 
-	//맵 매니저
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
-	AMapManager* MapManager;
+	//=======================================
+	// Getter / Setter 섹션
+	//==========================================
+	// Getters
+	UFUNCTION(BlueprintPure, Category = "GameState")
+	FORCEINLINE TArray<int32> GetTimeLineTrack() const { return TimeLineTrack; }
 
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "Manager")
-	APerformerManager* PerformerManager;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
-	UStageDataAsset* testDataSet;
-	//TODO : 스테이지 데이터 받는 로직 만들어야 함.
+	UFUNCTION(BlueprintPure, Category = "Manager")
+	FORCEINLINE AMapManager* GetMapManager() const { return MapManager; }
+
+	UFUNCTION(BlueprintPure, Category = "Manager")
+	FORCEINLINE APerformerManager* GetPerformerManager() const { return PerformerManager; }
+
+	UFUNCTION(BlueprintPure, Category = "Manager")
+	FORCEINLINE UStageDataAsset* GetCurrentStageDataAsset() const { return currentStageDataAsset; }
+
+	// Setters
+	UFUNCTION(BlueprintCallable, Category = "GameState")
+	FORCEINLINE void SetTimeLineTrack(const TArray<int32>& InTimeLineTrack) { TimeLineTrack = InTimeLineTrack; }
+
+	UFUNCTION(BlueprintCallable, Category = "Manager")
+	FORCEINLINE void SetMapManager(AMapManager* InMapManager) { MapManager = InMapManager; }
+
+	UFUNCTION(BlueprintCallable, Category = "Manager")
+	FORCEINLINE void SetPerformerManager(APerformerManager* InPerformerManager) { PerformerManager = InPerformerManager; }
+
+	UFUNCTION(BlueprintCallable, Category = "Manager")
+	FORCEINLINE void SetCurrentStageDataAsset(UStageDataAsset* InStageDataAsset) { currentStageDataAsset = InStageDataAsset; }
 
 
-	UFUNCTION()
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+
 	/**
 	* 스테이지 데이터를 받아서 시작할 준비를 합니다.
 	*/
-	void SetStageData(const UStageDataAsset* StageDataAsset);
+	UFUNCTION()
+	void SetStageData();
+
+
+	/** 게임을 시작합니다*/
+	UFUNCTION()
+	void StartGame();
+
+private:
+	/** 타임라인 트랙 정보*/
+	UPROPERTY(VisibleAnywhere, Category = "GameState", meta = (AllowPrivateAccess = "true"))
+	TArray<int32> TimeLineTrack;
+
+	/**맵 매니저*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<AMapManager> MapManager;
+
+	/**퍼포머 매니저*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<APerformerManager> PerformerManager;
+
+	/**현재 스테이지 데이터 인포*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UStageDataAsset> currentStageDataAsset;
+
+
+
+
 
 };
